@@ -1,3 +1,6 @@
 pretrained/* filter=lfs diff=lfs merge=lfs -text
 experiment1/* filter=lfs diff=lfs merge=lfs -text
 experiment2/* filter=lfs diff=lfs merge=lfs -text
+pretrained/** filter=lfs diff=lfs merge=lfs -text
+experiment1/** filter=lfs diff=lfs merge=lfs -text
+experiment2/** filter=lfs diff=lfs merge=lfs -text

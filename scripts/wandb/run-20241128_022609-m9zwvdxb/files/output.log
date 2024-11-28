@@ -1,0 +1,25 @@
+Network.train took 0.0023572444915771484
+To device took 0.008585691452026367
+epoch: 2 - batch: 1 - loss: 0.48426 - loss.bbox: 0.28762 - loss.trans: 0.26101 - loss.size: 0.24204 - loss.angle: 0.39592 - loss.class: 0.36177 - loss.object: 0.97286 - loss.objfeat: 0.27488 - loss.liou: 0.00649 - loss.bbox_iou: 0.26152 - gradnorm: 0.33468 - lr: 0.00160To device took 0.001463174819946289
+epoch: 2 - batch: 2 - loss: 0.62671 - loss.bbox: 0.62017 - loss.trans: 0.60507 - loss.size: 0.73495 - loss.angle: 0.47062 - loss.class: 0.39659 - loss.object: 0.95874 - loss.objfeat: 0.28377 - loss.liou: 0.00670 - loss.bbox_iou: 0.24540 - gradnorm: 1.36608 - lr: 0.00160To device took 0.0014331340789794922
+epoch: 2 - batch: 3 - loss: 0.65041 - loss.bbox: 0.59866 - loss.trans: 0.55093 - loss.size: 0.73653 - loss.angle: 0.46343 - loss.class: 0.46425 - loss.object: 0.95391 - loss.objfeat: 0.28430 - loss.liou: 0.00688 - loss.bbox_iou: 0.28250 - gradnorm: 1.46021 - lr: 0.00160To device took 0.0012340545654296875
+epoch: 2 - batch: 4 - loss: 0.70374 - loss.bbox: 0.64598 - loss.trans: 0.64001 - loss.size: 0.72824 - loss.angle: 0.53155 - loss.class: 0.46340 - loss.object: 0.96250 - loss.objfeat: 0.29261 - loss.liou: 0.00721 - loss.bbox_iou: 0.27359 - gradnorm: 1.80530 - lr: 0.00160
+Network.train took 0.002065896987915039
+Traceback (most recent call last):
+  File "train_diffusion.py", line 266, in <module>
+    main(sys.argv[1:])
+  File "train_diffusion.py", line 231, in main
+    for b, sample in enumerate(train_loader):
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 628, in __next__
+    data = self._next_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1316, in _next_data
+    idx, data = self._get_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1272, in _get_data
+    success, data = self._try_get_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1120, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/queue.py", line 179, in get
+    self.not_empty.wait(remaining)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/threading.py", line 306, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt

@@ -11,6 +11,7 @@ import argparse
 import logging
 import os
 import sys
+import time
 
 import numpy as np
 
@@ -150,9 +151,12 @@ def main(argv):
     train_loader = DataLoader(
         train_dataset,
         batch_size=config["training"].get("batch_size", 128),
-        num_workers=args.n_processes,
+        num_workers=7,
+        pin_memory=True,
+        persistent_workers=True,
         collate_fn=train_dataset.collate_fn,
-        shuffle=True
+        shuffle=True,
+        prefetch_factor=4
     )
     print("Loaded {} training scenes with {} object types".format(
         len(train_dataset), train_dataset.n_object_types)
@@ -162,7 +166,7 @@ def main(argv):
     val_loader = DataLoader(
         validation_dataset,
         batch_size=config["validation"].get("batch_size", 1),
-        num_workers=args.n_processes,
+        num_workers=0,
         collate_fn=validation_dataset.collate_fn,
         shuffle=False
     )
@@ -221,16 +225,25 @@ def main(argv):
     for i in range(args.continue_from_epoch, epochs):
         # adjust learning rate
         adjust_learning_rate(lr_scheduler, optimizer, i)
-
+        start_time = time.time()
         network.train()
+        print(f"Network.train took {time.time() - start_time}")
         #for b, sample in zip(range(steps_per_epoch), yield_forever(train_loader)):
         for b, sample in enumerate(train_loader):
+            start_time = time.time()
+            print(f"Batch {b} loaded in {time.time() - start_time:.2f} seconds")
+            start_time = time.time()
             # Move everything to device
             for k, v in sample.items():
                 if not isinstance(v, list):
-                    sample[k] = v.to(device)
+                    sample[k] = v.to(device, non_blocking=True)
+            print(f"To device took {time.time() - start_time}")
+            start_time = time.time()
             batch_loss = train_on_batch(network, optimizer, sample, config)
+            
+            print(f"Batch loss took {time.time() - start_time}")
             StatsLogger.instance().print_progress(i+1, b+1, batch_loss)
+            
 
         if (i % save_every) == 0:
             save_checkpoints(

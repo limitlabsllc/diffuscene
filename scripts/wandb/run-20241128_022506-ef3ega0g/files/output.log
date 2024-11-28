@@ -1,0 +1,31 @@
+Network.train took 0.002531290054321289
+epoch: 2 - batch: 1 - loss: 0.48426 - loss.bbox: 0.28762 - loss.trans: 0.26101 - loss.size: 0.24204 - loss.angle: 0.39592 - loss.class: 0.36177 - loss.object: 0.97286 - loss.objfeat: 0.27488 - loss.liou: 0.00649 - loss.bbox_iou: 0.26152 - gradnorm: 0.33468 - lr: 0.00160Batch 0: Loaded in 2.1174709796905518
+epoch: 2 - batch: 2 - loss: 0.62671 - loss.bbox: 0.62017 - loss.trans: 0.60507 - loss.size: 0.73495 - loss.angle: 0.47062 - loss.class: 0.39659 - loss.object: 0.95874 - loss.objfeat: 0.28377 - loss.liou: 0.00670 - loss.bbox_iou: 0.24540 - gradnorm: 1.36608 - lr: 0.00160Batch 1: Loaded in 0.3784749507904053
+epoch: 2 - batch: 3 - loss: 0.65041 - loss.bbox: 0.59866 - loss.trans: 0.55093 - loss.size: 0.73653 - loss.angle: 0.46343 - loss.class: 0.46425 - loss.object: 0.95391 - loss.objfeat: 0.28430 - loss.liou: 0.00688 - loss.bbox_iou: 0.28250 - gradnorm: 1.46021 - lr: 0.00160Batch 2: Loaded in 0.37560439109802246
+epoch: 2 - batch: 4 - loss: 0.70374 - loss.bbox: 0.64598 - loss.trans: 0.64001 - loss.size: 0.72824 - loss.angle: 0.53155 - loss.class: 0.46340 - loss.object: 0.96250 - loss.objfeat: 0.29261 - loss.liou: 0.00721 - loss.bbox_iou: 0.27359 - gradnorm: 1.80530 - lr: 0.00160Batch 3: Loaded in 0.3137686252593994
+
+Network.train took 0.002275705337524414
+epoch: 3 - batch: 1 - loss: 0.63693 - loss.bbox: 0.69385 - loss.trans: 0.72010 - loss.size: 0.83557 - loss.angle: 0.44190 - loss.class: 0.42893 - loss.object: 1.03592 - loss.objfeat: 0.28731 - loss.liou: 0.00589 - loss.bbox_iou: 0.25303 - gradnorm: 0.80387 - lr: 0.00160Batch 0: Loaded in 0.3816714286804199
+epoch: 3 - batch: 2 - loss: 0.64992 - loss.bbox: 0.54559 - loss.trans: 0.54212 - loss.size: 0.61819 - loss.angle: 0.44191 - loss.class: 0.53604 - loss.object: 1.01040 - loss.objfeat: 0.29672 - loss.liou: 0.00612 - loss.bbox_iou: 0.28137 - gradnorm: 0.59355 - lr: 0.00160Batch 1: Loaded in 0.37691783905029297
+epoch: 3 - batch: 3 - loss: 0.65965 - loss.bbox: 0.49264 - loss.trans: 0.47650 - loss.size: 0.54321 - loss.angle: 0.44099 - loss.class: 0.54476 - loss.object: 0.99843 - loss.objfeat: 0.30053 - loss.liou: 0.00618 - loss.bbox_iou: 0.31198 - gradnorm: 0.78249 - lr: 0.00160Batch 2: Loaded in 0.37552523612976074
+epoch: 3 - batch: 4 - loss: 0.65671 - loss.bbox: 0.50272 - loss.trans: 0.48614 - loss.size: 0.55422 - loss.angle: 0.45034 - loss.class: 0.59380 - loss.object: 0.99045 - loss.objfeat: 0.30971 - loss.liou: 0.00626 - loss.bbox_iou: 0.32332 - gradnorm: 0.89812 - lr: 0.00160Batch 3: Loaded in 0.31925010681152344
+
+Network.train took 0.0020265579223632812
+Traceback (most recent call last):
+  File "train_diffusion.py", line 265, in <module>
+    main(sys.argv[1:])
+  File "train_diffusion.py", line 231, in main
+    for b, sample in enumerate(train_loader):
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 628, in __next__
+    data = self._next_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1316, in _next_data
+    idx, data = self._get_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1272, in _get_data
+    success, data = self._try_get_data()
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1120, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/queue.py", line 179, in get
+    self.not_empty.wait(remaining)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/threading.py", line 306, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt

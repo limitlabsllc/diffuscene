@@ -1,0 +1,16 @@
+{"time":"2024-11-28T01:53:26.202419364Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T01:53:26.202472384Z","level":"INFO","msg":"created symlink","path":"/home/ubuntu/DiffuScene/scripts/wandb/run-20241128_015326-bwo7rs26/logs/debug-core.log"}
+{"time":"2024-11-28T01:53:26.319913733Z","level":"INFO","msg":"created new stream","id":"bwo7rs26"}
+{"time":"2024-11-28T01:53:26.319995604Z","level":"INFO","msg":"stream: started","id":"bwo7rs26"}
+{"time":"2024-11-28T01:53:26.320136564Z","level":"INFO","msg":"writer: Do: started","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:53:26.320300794Z","level":"INFO","msg":"handler: started","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:53:26.320409134Z","level":"INFO","msg":"sender: started","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:53:26.54048663Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T01:55:12.930932612Z","level":"INFO","msg":"stream: closing","id":"bwo7rs26"}
+{"time":"2024-11-28T01:55:12.931049523Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T01:55:12.9324311Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T01:55:13.224844272Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T01:55:13.331784402Z","level":"INFO","msg":"handler: closed","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:55:13.33183994Z","level":"INFO","msg":"writer: Close: closed","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:55:13.331899901Z","level":"INFO","msg":"sender: closed","stream_id":"bwo7rs26"}
+{"time":"2024-11-28T01:55:13.331984052Z","level":"INFO","msg":"stream: closed","id":"bwo7rs26"}

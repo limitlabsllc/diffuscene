@@ -15,6 +15,10 @@ import sys
 import numpy as np
 import torch
 
+import os
+os.environ["PYOPENGL_PLATFORM"] = "egl"
+
+
 from training_utils import load_config
 from utils import floor_plan_from_scene, export_scene, get_textured_objects_in_scene
 
@@ -218,6 +222,7 @@ def main(argv):
     )
 
     # Build the dataset of 3D models
+    print("MEHEK, PATH = " + args.path_to_pickled_3d_futute_models)
     objects_dataset = ThreedFutureDataset.from_pickled_dataset(
         args.path_to_pickled_3d_futute_models
     )

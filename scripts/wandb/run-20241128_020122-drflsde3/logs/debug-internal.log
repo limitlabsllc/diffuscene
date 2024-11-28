@@ -1,0 +1,16 @@
+{"time":"2024-11-28T02:01:22.64456576Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T02:01:22.644632677Z","level":"INFO","msg":"created symlink","path":"/home/ubuntu/DiffuScene/scripts/wandb/run-20241128_020122-drflsde3/logs/debug-core.log"}
+{"time":"2024-11-28T02:01:22.754924089Z","level":"INFO","msg":"created new stream","id":"drflsde3"}
+{"time":"2024-11-28T02:01:22.755028338Z","level":"INFO","msg":"stream: started","id":"drflsde3"}
+{"time":"2024-11-28T02:01:22.755237286Z","level":"INFO","msg":"writer: Do: started","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:01:22.75538506Z","level":"INFO","msg":"handler: started","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:01:22.755468789Z","level":"INFO","msg":"sender: started","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:01:22.964138277Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T02:03:57.189335477Z","level":"INFO","msg":"stream: closing","id":"drflsde3"}
+{"time":"2024-11-28T02:03:57.189411817Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T02:03:57.191045829Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T02:03:57.515492905Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T02:03:57.604888531Z","level":"INFO","msg":"handler: closed","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:03:57.604968061Z","level":"INFO","msg":"writer: Close: closed","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:03:57.604997081Z","level":"INFO","msg":"sender: closed","stream_id":"drflsde3"}
+{"time":"2024-11-28T02:03:57.605196952Z","level":"INFO","msg":"stream: closed","id":"drflsde3"}

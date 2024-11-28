@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "train_diffusion.py", line 259, in <module>
+    main(sys.argv[1:])
+  File "train_diffusion.py", line 232, in main
+    batch_loss = train_on_batch(network, optimizer, sample, config)
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/diffusion_scene_layout_ddpm.py", line 460, in train_on_batch
+    loss, loss_dict = model.get_loss(sample_params)
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/diffusion_scene_layout_ddpm.py", line 224, in get_loss
+    loss, loss_dict = self.diffusion.get_loss_iter(room_layout_target, condition=condition, condition_cross=condition_cross)
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/diffusion_ddpm.py", line 769, in get_loss_iter
+    losses, loss_dict = self.diffusion.p_losses(
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/diffusion_ddpm.py", line 549, in p_losses
+    denoise_out = denoise_fn(data_t, t, condition, condition_cross)
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/diffusion_ddpm.py", line 753, in _denoise
+    out = self.model(data, t, condition, condition_cross)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ubuntu/DiffuScene/scene_synthesis/networks/denoise_net.py", line 513, in forward
+    x_class = self.class_embedf(x[:, self.bbox_dim:self.bbox_dim+self.class_dim, :])
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/container.py", line 204, in forward
+    input = module(input)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 313, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/ubuntu/miniconda3/envs/diffuscene/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 309, in _conv_forward
+    return F.conv1d(input, weight, bias, self.stride,
+KeyboardInterrupt

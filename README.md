@@ -59,9 +59,9 @@ python pickle_threed_future_pointcloud.py path_to_output_dir path_to_3d_front_da
 ``` 
 For example,
 ```
-python pickle_threed_future_dataset.py  /cluster/balrog/jtang/3d_front_processed/ /cluster/balrog/jtang/3D-FRONT/ /cluster/balrog/jtang/3D-FUTURE-model /cluster/balrog/jtang/3D-FUTURE-model/model_info.json  --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv
+python pickle_threed_future_dataset.py  /home/ubuntu/3d_front_processed/ /home/ubuntu/3D-FRONT/ /home/ubuntu/3D-FUTURE-model /home/ubuntu/3D-FUTURE-model/model_info.json  --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv
 
-PATH_TO_SCENES="/cluster/balrog/jtang/3d_front_processed/threed_front.pkl" python pickle_threed_fucture_pointcloud.py /cluster/balrog/jtang/3d_front_processed/ /cluster/balrog/jtang/3D-FRONT/ /cluster/balrog/jtang/3D-FUTURE-model /cluster/balrog/jtang/3D-FUTURE-model/model_info.json  --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv
+PATH_TO_SCENES="/home/ubuntu/3d_front_processed/threed_front.pkl" python pickle_threed_fucture_pointcloud.py /home/ubuntu/3d_front_processed/ /home/ubuntu/3D-FRONT/ /home/ubuntu/3D-FUTURE-model /home/ubuntu/3D-FUTURE-model/model_info.json  --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv
 ```
 
 Note that these two scripts should be separately executed for different room
@@ -71,22 +71,22 @@ with different `--dataset_filtering` and `--annotation_file`options. Please chec
 additional details.
 
 ### Train shape autoencoder
-Then you can train the shape autoencoder using all models from bedrooms/diningrooms/livingrooms.
+Then you can train the shape autoencoder using all models from bedrooms_objfeats_32_64/diningrooms_objfeats_32_64/livingrooms.
 ```
 cd ./scripts
-PATH_TO_SCENES="/cluster/balrog/jtang/3d_front_processed/threed_front.pkl" python train_objautoencoder.py ../config/obj_autoencoder/bed_living_diningrooms_lat32.yaml your_objae_output_directory --experiment_tag  "bed_living_diningrooms_lat32" --with_wandb_logger
+PATH_TO_SCENES="/home/ubuntu/3d_front_processed/threed_front.pkl" python train_objautoencoder.py ../config/obj_autoencoder/bed_living_diningrooms_lat32.yaml your_objae_output_directory --experiment_tag  "bed_living_diningrooms_lat32" --with_wandb_logger
 ```
 
 ### Pickle Latent Shape Code
 Next, you can use the pre-train checkpoint of shape autoencoder to extract latent shape codes for each room type. Take the bedrooms for example:
 ```
-PATH_TO_SCENES="/cluster/balrog/jtang/3d_front_processed/threed_front.pkl" python generate_objautoencoder.py ../config/objautoencoder/bedrooms.yaml your_objae_output_directory --experiment_tag "bed_living_diningrooms_lat32"
+PATH_TO_SCENES="/home/ubuntu/3d_front_processed/threed_front.pkl" python generate_objautoencoder.py ../config/objautoencoder/bedrooms.yaml your_objae_output_directory --experiment_tag "bed_living_diningrooms_lat32"
 ```
 
 ### Preprocess 3D-Front dataset with latent shape codes
 Finally, you can run `preprocessing_data.py` to read and pickle object properties (class label, location, orientation, size, and latent shape features) of each scene.
 ```
-PATH_TO_SCENES="/cluster/balrog/jtang/3d_front_processed/threed_front.pkl" python preprocess_data.py /cluster/balrog/jtang/3d_front_processed/livingrooms_objfeats_32_64 /cluster/balrog/jtang/3D-FRONT/ /cluster/balrog/jtang/3D-FUTURE-model /cluster/balrog/jtang/3D-FUTURE-model/model_info.json --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv --add_objfeats
+PATH_TO_SCENES="/home/ubuntu/3d_front_processed/threed_front.pkl" python preprocess_data.py /home/ubuntu/3d_front_processed/livingrooms_objfeats_32_64 /home/ubuntu/3D-FRONT/ /home/ubuntu/3D-FUTURE-model /home/ubuntu/3D-FUTURE-model/model_info.json --dataset_filtering threed_front_livingroom --annotation_file ../config/livingroom_threed_front_splits.csv --add_objfeats
 ```
 The proprossed datasets can also be downloaded from [here](https://drive.google.com/file/d/1UNSFN0kULyOzUErDPVvkKYbmfzA-4MsG/view?usp=sharing).
 
