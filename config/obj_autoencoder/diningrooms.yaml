@@ -34,7 +34,7 @@ network:
     angle_dim: 2 
 
     # for object autoencoder
-    objfeat_dim: 32 #64
+    objfeat_dim: 64
     kl_weight: 0.001
 
 
