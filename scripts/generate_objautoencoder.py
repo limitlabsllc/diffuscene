@@ -206,6 +206,7 @@ def main(argv):
 
                 # save obj autoencoder results for vis check
                 model_jid = validation_dataset.get_model_jid(idx_i)["model_jid"]
+                print(f"Processing model: {model_jid}")
                 filename_input = "{}/{}.ply".format(generation_directory, model_jid)
                 filename_rec  =  "{}/{}_rec.ply".format(generation_directory, model_jid)
                 export_pointcloud(pc_i, filename_input)
@@ -218,7 +219,12 @@ def main(argv):
                 assert model_jid == obj.model_jid
                 raw_model_path = obj.raw_model_path
                 filename_lats = raw_model_path[:-4] + "_norm_pc_lat{:d}.npz".format(latent_dim)
+                print(f"Mehek, saving latent file to: {filename_lats}")
                 np.savez(filename_lats, latent=lat_i)
+                if os.path.exists(filename_lats):
+                    print(f"Successfully saved: {filename_lats}")
+                else:
+                    print(f"Failed to save latent file for model {model_jid}")
 
             print('iter {}'.format(b), lat.shape, lat.min(), lat.max(), rec.shape)
             
@@ -229,7 +235,51 @@ def main(argv):
         lat_scaled = lat_all * scale_factor
         print('after: std {}, min {}, max {}'.format(lat_scaled.flatten().std(), lat_scaled.min(), lat_scaled.max()) )
         print("====> Validation Epoch ====>")
+    
 
+def process_loader(data_loader, dataset, network, device, generation_directory, latent_dim):
+    lat_list = []
+    with torch.no_grad():
+        print("====> Processing Dataset ====>")
+        network.eval()
+        for b, sample in enumerate(data_loader):
+            # Move everything to device
+            for k, v in sample.items():
+                if not isinstance(v, list):
+                    sample[k] = v.to(device)
+            kl, lat, rec = network(sample["points"])
+            idx = sample["idx"]
+            lat_list.append(lat)
+
+            for i in range(lat.shape[0]):
+                lat_i = lat[i].cpu().numpy()
+                pc_i = sample["points"][i].cpu().numpy()
+                rec_i = rec[i].cpu().numpy()
+                idx_i = idx[i].item()
+
+                # Save obj autoencoder results for visualization
+                model_jid = dataset.get_model_jid(idx_i)["model_jid"]
+                filename_input = "{}/{}.ply".format(generation_directory, model_jid)
+                filename_rec = "{}/{}_rec.ply".format(generation_directory, model_jid)
+                export_pointcloud(pc_i, filename_input)
+                export_pointcloud(rec_i, filename_rec)
+
+                # Save objfeat (latent code)
+                obj = dataset.objects[idx_i]
+                assert model_jid == obj.model_jid
+                raw_model_path = obj.raw_model_path
+                filename_lats = raw_model_path[:-4] + "_norm_pc_lat{:d}.npz".format(latent_dim)
+                np.savez(filename_lats, latent=lat_i)
+
+            print('iter {}'.format(b), lat.shape, lat.min(), lat.max(), rec.shape)
+
+        lat_all = torch.cat(lat_list, dim=0)
+        print('before: std {}, min {}, max {}'.format(lat_all.flatten().std(), lat_all.min(), lat_all.max()))
+        scale_factor = 1.0 / lat_all.flatten().std()
+        print('scale factor:', scale_factor)
+        lat_scaled = lat_all * scale_factor
+        print('after: std {}, min {}, max {}'.format(lat_scaled.flatten().std(), lat_scaled.min(), lat_scaled.max()))
+        print("====> Finished Processing Dataset ====>")
 
 if __name__ == "__main__":
     main(sys.argv[1:])

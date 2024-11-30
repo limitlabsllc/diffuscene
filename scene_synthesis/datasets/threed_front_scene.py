@@ -199,11 +199,12 @@ class ThreedFutureModel(BaseThreedFutureModel):
     ):
         super().__init__(model_uid, model_jid, position, rotation, scale)
         self.model_info = model_info
-        self.path_to_models = path_to_models
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         self._label = None
 
     @property
     def raw_model_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
@@ -213,6 +214,7 @@ class ThreedFutureModel(BaseThreedFutureModel):
     # add normalized point cloud of raw_model
     @property
     def raw_model_norm_pc_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
@@ -221,14 +223,16 @@ class ThreedFutureModel(BaseThreedFutureModel):
 
     @property
     def raw_model_norm_pc_lat_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
-            "raw_model_norm_pc_lat.npz"
+            "raw_model_norm_pc_lat64.npz"
         )
 
     @property
     def raw_model_norm_pc_lat32_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,

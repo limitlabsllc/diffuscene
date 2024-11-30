@@ -58,12 +58,16 @@ class ThreedFutureDataset(object):
         sorted_mses = [k for k, v in sorted(mses.items(), key=lambda x:x[1])]
         return sorted_mses[0]
 
+
+    # LUCAS, THIS IS WHAT WE NEED TO CHANGE. -MEHEK
     def get_closest_furniture_to_objfeats_and_size(self, query_label, query_objfeat, query_size):
+        # filters furniture dataset by category
         objects = self._filter_objects_by_label(query_label)
 
         objs = []
         mses_feat = []
         mses_size = []
+        # for each object in the dataset, calculate the mse between the object's latent encoding and the query encoding. also do the mse between the object and query size
         for i, oi in enumerate(objects):
             if query_objfeat.shape[0] == 32:
                 mses_feat.append( np.sum((oi.raw_model_norm_pc_lat32() - query_objfeat)**2, axis=-1) )
@@ -73,6 +77,8 @@ class ThreedFutureDataset(object):
             objs.append(oi)
 
         ind = np.lexsort( (mses_feat, mses_size) )
+
+        # sort and return the top one.
         return objs[ ind[0] ]
 
     @classmethod
