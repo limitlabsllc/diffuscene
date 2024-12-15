@@ -135,7 +135,6 @@ def main(argv):
         help="if remove the floor plane"
     )
 
-
     args = parser.parse_args(argv)
     logging.getLogger("trimesh").setLevel(logging.ERROR)
 
@@ -232,6 +231,10 @@ def main(argv):
         if os.path.exists(room_directory):
             continue
 
+        print(es.keys())
+
+
+
         # Make sure we are the only ones creating this file
         with DirLock(room_directory + ".lock") as lock:
             if not lock.is_acquired:
@@ -255,6 +258,7 @@ def main(argv):
             )[:, :, 0:1]
 
             if args.add_objfeats:
+                print("mehek add objfeats_32")
                 np.savez_compressed(
                     os.path.join(room_directory, "boxes"),
                     uids=uids,
@@ -273,6 +277,7 @@ def main(argv):
                     angles=es["angles"],
                     objfeats=es["objfeats"],
                     objfeats_32=es["objfeats_32"],
+                    objimages=es["objimages"]
                 )
             else:
                 np.savez_compressed(
@@ -290,7 +295,8 @@ def main(argv):
                     class_labels=es["class_labels"],
                     translations=es["translations"],
                     sizes=es["sizes"],
-                    angles=es["angles"]
+                    angles=es["angles"],
+                    objimages=es["objimages"]
                 )
 
 

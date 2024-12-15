@@ -230,7 +230,6 @@ def main(argv):
         print(f"Network.train took {time.time() - start_time}")
         #for b, sample in zip(range(steps_per_epoch), yield_forever(train_loader)):
         for b, sample in enumerate(train_loader):
-            start_time = time.time()
             print(f"Batch {b} loaded in {time.time() - start_time:.2f} seconds")
             start_time = time.time()
             # Move everything to device
@@ -243,6 +242,7 @@ def main(argv):
             
             print(f"Batch loss took {time.time() - start_time}")
             StatsLogger.instance().print_progress(i+1, b+1, batch_loss)
+            start_time = time.time()
             
 
         if (i % save_every) == 0:

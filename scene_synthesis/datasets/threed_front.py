@@ -104,7 +104,7 @@ class ThreedFront(BaseDataset):
         all_objfeats_32 = np.stack(all_objfeats_32, axis=0)
         _objfeat_std, _objfeat_min, _objfeat_max = np.array([all_objfeats.flatten().std()]), np.array([all_objfeats.min()]), np.array([all_objfeats.max()])
         _objfeat_32_std, _objfeat_32_min, _objfeat_32_max = np.array([all_objfeats_32.flatten().std()]), np.array([all_objfeats_32.min()]), np.array([all_objfeats_32.max()])
-            
+          
         self._sizes = (_size_min, _size_max)
         self._centroids = (_centroid_min, _centroid_max)
         self._angles = (_angle_min, _angle_max)
@@ -246,7 +246,8 @@ class CachedRoom(object):
         angles,
         objfeats,
         objfeats_32,
-        image_path
+        image_path,
+        objimages
     ):
         self.scene_id = scene_id
         self.room_layout = room_layout
@@ -260,6 +261,7 @@ class CachedRoom(object):
         self.objfeats = objfeats
         self.objfeats_32 = objfeats_32
         self.image_path = image_path
+        self.objimages = objimages
 
     @property
     def floor_plan(self):
@@ -284,6 +286,8 @@ class CachedThreedFront(ThreedFront):
             for oi in os.listdir(self._base_dir)
             if oi.split("_")[1] in scene_ids
         ])
+        if not self._tags:
+            raise ValueError(f"No valid tags found in {self._base_dir} for scene IDs {scene_ids}.")
         self._path_to_rooms = sorted([
             os.path.join(self._base_dir, pi, "boxes.npz")
             for pi in self._tags
@@ -343,7 +347,8 @@ class CachedThreedFront(ThreedFront):
             angles=D["angles"],
             objfeats=D["objfeats"] if "objfeats" in D.keys() else None,
             objfeats_32=D["objfeats_32"] if "objfeats_32" in D.keys() else None,
-            image_path=self._path_to_renders[i]
+            image_path=self._path_to_renders[i],
+            objimages=D["objimages"] if "objimages" in D.keys() else None,
         )
 
     def get_room_params(self, i):
@@ -369,6 +374,9 @@ class CachedThreedFront(ThreedFront):
             data_dict[ "objfeats" ] = D["objfeats"]
         if "objfeats_32" in D.keys():
             data_dict[ "objfeats_32" ] = D["objfeats_32"]
+        if "objimages" in D.keys():
+            print("objimages in D.keys")
+            data_dict["objimages"] = D["objimages"]
         
         return data_dict
 

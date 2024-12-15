@@ -1,11 +1,11 @@
 cd ./scripts
 
 
-exp_dir="../experiment1"
+exp_dir="../experiment_6000_images"
 
 #### bedrooms
-config="../config/uncond/diffusion_bedrooms_instancond_lat32_v.yaml"
-exp_name="diffusion_bedrooms_instancond_lat32_v"
+config="../config/uncond/diffusion_bedrooms_instancond_lat32_v_img.yaml"
+exp_name="diffusion_bedrooms_instancond_lat32_v_img"
 python train_diffusion.py $config $exp_dir --experiment_tag $exp_name  --with_wandb_logger
 
 #### diningrooms

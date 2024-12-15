@@ -1,7 +1,7 @@
 data:
     dataset_type: "cached_threedfront"
-    encoding_type: "cached_diffusion_cosin_angle_objfeatsnorm_lat32_wocm" #"****_wocm_no_prm"
-    dataset_directory: "/home/ubuntu/3d_front_processed/diningrooms_objfeats_32_64"
+    encoding_type: "cached_diffusion_cosin_angle_objfeatsnorm_lat32_wocm_image" #"****_wocm_no_prm"
+    dataset_directory: "/home/ubuntu/3d_front_processed/diningrooms_images"
     annotation_file: "../config/diningroom_threed_front_splits.csv"
     path_to_invalid_scene_ids: "../config/invalid_threed_front_rooms.txt"
     path_to_invalid_bbox_jids: "../config/black_list.txt"
@@ -39,7 +39,7 @@ network:
         beta_end: 0.02
         time_num: 1000 
         loss_type: 'mse'
-        model_mean_type: 'eps'
+        model_mean_type: 'v' #'eps'
         model_var_type: 'fixedsmall'
         loss_separate: true
         loss_iou: true
@@ -67,7 +67,7 @@ feature_extractor:
 
 training:
     splits: ["train", "val"]
-    epochs: 600
+    epochs: 6000
     steps_per_epoch: 500
     batch_size: 128
     save_frequency: 20

@@ -199,11 +199,12 @@ class ThreedFutureModel(BaseThreedFutureModel):
     ):
         super().__init__(model_uid, model_jid, position, rotation, scale)
         self.model_info = model_info
-        self.path_to_models = path_to_models
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         self._label = None
 
     @property
     def raw_model_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
@@ -213,22 +214,36 @@ class ThreedFutureModel(BaseThreedFutureModel):
     # add normalized point cloud of raw_model
     @property
     def raw_model_norm_pc_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
             "raw_model_norm_pc.npz"
         )
 
+    
+
     @property
     def raw_model_norm_pc_lat_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
-            "raw_model_norm_pc_lat.npz"
+            "raw_model_norm_pc_lat64.npz"
+        )
+    
+    @property
+    def image_clip_lat512_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
+        return os.path.join(
+            self.path_to_models,
+            self.model_jid,
+            "image_clip_lat512.npz"
         )
 
     @property
     def raw_model_norm_pc_lat32_path(self):
+        self.path_to_models = "/home/ubuntu/3D-FUTURE-model"
         return os.path.join(
             self.path_to_models,
             self.model_jid,
@@ -265,6 +280,10 @@ class ThreedFutureModel(BaseThreedFutureModel):
     def raw_model_norm_pc_lat32(self):
         latent = np.load(self.raw_model_norm_pc_lat32_path)["latent"].astype(np.float32)
         return latent
+
+    def image_clip_lat512(self):
+        embedding = np.load(self.image_clip_lat512_path)["latent"].astype(np.float32)
+        return embedding
 
     def raw_model(self):
         try:
@@ -544,6 +563,10 @@ class Room(BaseScene):
         for di in self.furniture_in_room:
             category_counts[class_labels.index(di)] += 1
         return category_counts
+    
+    def get_object_images(self):
+        """Collect image embeddings for all objects in the room."""
+        return np.stack([obj.image_clip_lat512() for obj in self.bboxes])
 
     def ordered_bboxes_with_centroid(self):
         centroids = np.array([f.centroid(-self.centroid) for f in self.bboxes])

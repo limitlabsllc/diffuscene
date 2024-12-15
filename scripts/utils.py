@@ -17,6 +17,7 @@ from simple_3dviz.utils import render as render_simple_3dviz
 
 from scene_synthesis.utils import get_textured_objects, get_textured_objects_based_on_objfeats
 import trimesh
+from trimesh.visual import ColorVisuals, TextureVisuals
 import torch
 import open3d as o3d
 import pyvista as pv
@@ -297,9 +298,23 @@ def merge_meshes(meshes):
     num_triangles = 0
     num_vertex_colors = 0
     for i in range(len(meshes)):
+        print(meshes[i].visual)
         num_vertices += np.asarray(meshes[i].vertices).shape[0]
         num_triangles += np.asarray(meshes[i].faces).shape[0]
-        num_vertex_colors += np.asarray(meshes[i].visual.vertex_colors/255.0).shape[0]
+
+        if isinstance(meshes[i].visual, ColorVisuals):
+            # Handle vertex colors
+            num_vertex_colors += np.asarray(meshes[i].visual.vertex_colors / 255.0).shape[0]
+        elif isinstance(meshes[i].visual, TextureVisuals):
+            # Handle TextureVisuals (convert or skip)
+            print(f"Mesh {i} has TextureVisuals. Converting textures to vertex colors.")
+            try:
+                meshes[i].visual = meshes[i].visual.to_color()  # Convert texture to vertex colors
+                num_vertex_colors += np.asarray(meshes[i].visual.vertex_colors / 255.0).shape[0]
+            except Exception as e:
+                print(f"Failed to convert textures to vertex colors for mesh {i}: {e}")
+        else:
+            print(f"Mesh {i} has unsupported visual type.")
 
     # Merge vertices and faces.
     vertices = np.zeros((num_vertices, 3), dtype=np.float64)

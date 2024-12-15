@@ -225,6 +225,22 @@ class ObjFeat32Encoder(DataEncoder):
     def bbox_dims(self):
         return 32
 
+class ImageEncoder(DataEncoder):
+    """Encodes precomputed image embeddings."""
+    @property
+    def property_type(self):
+        return "objimages"
+
+    def __getitem__(self, idx):
+        # Get the scene and collect image embeddings
+        scene = self._dataset[idx]
+        return scene.get_object_images()
+
+    @property
+    def bbox_dims(self):
+        return 512  # Size of the image embedding
+
+
 class DatasetCollection(DatasetDecoratorBase):
     def __init__(self, *datasets):
         super().__init__(datasets[0])
@@ -914,6 +930,12 @@ class Diffusion(DatasetDecoratorBase):
                     new_class_labels, np.tile(end_label[None, :], [max_length - L, 1])
                 ]).astype(np.float32) * 2.0 - 1.0 
 
+            elif k == "objimages":
+                p = np.copy(v)
+                L, _, D = p.shape  # Extract number of objects (L) and embedding size (D)
+                p = p.squeeze(1)  # Remove the redundant middle dimension, shape: (L, 512)
+                padding = np.zeros((max_length - L, D), dtype=np.float32)  # Padding for missing objects
+                sample_params_target[k] = np.vstack([p, padding]).astype(np.float32) 
             else:
                 p = np.copy(v)
                 # Set the attributes to for the end symbol
@@ -951,12 +973,20 @@ def dataset_encoding_factory(
     if "cached" in name:
         if "objfeats" in name:
             if "lat32" in name:
-                dataset_collection = OrderedDataset(
+                if "image" in name:
+                    print("mehek, load with image")
+                    dataset_collection = OrderedDataset(
                     CachedDatasetCollection(dataset),
-                    ["class_labels", "translations", "sizes", "angles", "objfeats_32"],
+                    ["class_labels", "translations", "sizes", "angles", "objfeats_32", "objimages"],
                     box_ordering=box_ordering
-                )
-                print("use lat32 as objfeats")
+                    )
+                else:
+                    dataset_collection = OrderedDataset(
+                        CachedDatasetCollection(dataset),
+                        ["class_labels", "translations", "sizes", "angles", "objfeats_32"],
+                        box_ordering=box_ordering
+                    )
+                    print("use lat32 as objfeats")
             else:
                 dataset_collection = OrderedDataset(
                     CachedDatasetCollection(dataset),
@@ -970,6 +1000,7 @@ def dataset_encoding_factory(
                 ["class_labels", "translations", "sizes", "angles"],
                 box_ordering=box_ordering
             )
+    
     else:
         box_ordered_dataset = BoxOrderedDataset(
             dataset,
@@ -982,6 +1013,7 @@ def dataset_encoding_factory(
         angles = AngleEncoder(box_ordered_dataset)
         objfeats = ObjFeatEncoder(box_ordered_dataset)
         objfeats_32 = ObjFeat32Encoder(box_ordered_dataset)
+        image_encoder = ImageEncoder(box_ordered_dataset)
 
         dataset_collection = DatasetCollection(
             room_layout,
@@ -990,17 +1022,19 @@ def dataset_encoding_factory(
             sizes,
             angles,
             objfeats,
-            objfeats_32,
+            objfeats_32
         )
 
     if name == "basic":
+        print("mehek, making basic")
         return DatasetCollection(
             class_labels,
             translations,
             sizes,
             angles, 
             objfeats,
-            objfeats_32
+            objfeats_32,
+            image_encoder
         )
 
     if isinstance(augmentations, list):
@@ -1040,6 +1074,9 @@ def dataset_encoding_factory(
             permute_keys.append("objfeats_32")
         else:
             permute_keys.append("objfeats")
+
+    if "image" in name:
+        permute_keys.append("objimages")
     print("permute keys are:", permute_keys)
             
 

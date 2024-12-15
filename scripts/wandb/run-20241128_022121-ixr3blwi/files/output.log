@@ -1,7 +1,0 @@
-epoch: 2 - batch: 1 - loss: 0.48918 - loss.bbox: 0.28471 - loss.trans: 0.25970 - loss.size: 0.23684 - loss.angle: 0.39404 - loss.class: 0.36246 - loss.object: 0.96996 - loss.objfeat: 0.27921 - loss.liou: 0.00663 - loss.bbox_iou: 0.26623 - gradnorm: 0.34378 - lr: 0.00080
-Traceback (most recent call last):
-  File "train_diffusion.py", line 262, in <module>
-    main(sys.argv[1:])
-  File "train_diffusion.py", line 236, in main
-    print(f"Batch {b}: Loaded in {time.time() - start_time}")
-NameError: name 'time' is not defined

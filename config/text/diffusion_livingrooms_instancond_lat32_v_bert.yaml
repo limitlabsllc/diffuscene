@@ -73,10 +73,10 @@ feature_extractor:
 
 training:
     splits: ["train", "val"]
-    epochs: 120000 #60000
+    epochs: 120 #60000
     steps_per_epoch: 500
     batch_size: 128
-    save_frequency: 2000 
+    save_frequency: 20
     max_grad_norm: 10
     # optimizer
     optimizer: Adam

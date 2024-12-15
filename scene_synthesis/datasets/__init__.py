@@ -62,6 +62,7 @@ def get_encoded_dataset(
     augmentations=None,
     split=["train", "val"]
 ):
+    print("getting encoded dataset, mehek")
     _, encoding = get_dataset_raw_and_encoded(
         config, filter_fn, path_to_bounds, augmentations, split
     )
